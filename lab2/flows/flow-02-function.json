@@ -1,0 +1,76 @@
+[
+    {
+        "id": "baa325e1a75e2bce",
+        "type": "tab",
+        "label": "Поток 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "1f5ffc7c0adfce3c",
+        "type": "inject",
+        "z": "baa325e1a75e2bce",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "7",
+        "payloadType": "num",
+        "x": 130,
+        "y": 160,
+        "wires": [
+            [
+                "7ac089c18d4c92ee"
+            ]
+        ]
+    },
+    {
+        "id": "7ac089c18d4c92ee",
+        "type": "function",
+        "z": "baa325e1a75e2bce",
+        "name": "function 1",
+        "func": "const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];\nlet sumOfEven = 0;\nlet result = {\n    surname: \"Gavrilik\",\n    processed: []\n};\n\nfor (let i = 0; i < numbers.length; i++) {\n    const n = numbers[i];\n    if (n % 2 === 0) {\n        sumOfEven += n;\n        result.processed.push({ value: n, type: \"even\" });\n    } else {\n        result.processed.push({ value: n, type: \"odd\" });\n    }\n}\n\nresult.sumOfEven = sumOfEven;\nmsg.payload = result;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 160,
+        "wires": [
+            [
+                "0e0380cc11204c8b"
+            ]
+        ]
+    },
+    {
+        "id": "0e0380cc11204c8b",
+        "type": "debug",
+        "z": "baa325e1a75e2bce",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 580,
+        "y": 160,
+        "wires": []
+    }
+]
