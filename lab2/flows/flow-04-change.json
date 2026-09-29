@@ -1,0 +1,97 @@
+[
+    {
+        "id": "6ef40e5f6232644f",
+        "type": "tab",
+        "label": "2.4 Change",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "b9ba9312467bdd12",
+        "type": "inject",
+        "z": "6ef40e5f6232644f",
+        "name": "Старт 2.4",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "исходное сообщение",
+        "payloadType": "str",
+        "x": 160,
+        "y": 200,
+        "wires": [
+            [
+                "d000af40f291e52f"
+            ]
+        ]
+    },
+    {
+        "id": "d000af40f291e52f",
+        "type": "change",
+        "z": "6ef40e5f6232644f",
+        "name": "Установка полей",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "lab2/Gavrilik/change",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "timestamp",
+                "pt": "msg",
+                "to": "",
+                "tot": "date"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Gavrilik, группа ИИ",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 390,
+        "y": 200,
+        "wires": [
+            [
+                "5ff298b83dc19fac"
+            ]
+        ]
+    },
+    {
+        "id": "5ff298b83dc19fac",
+        "type": "debug",
+        "z": "6ef40e5f6232644f",
+        "name": "debug 3",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 640,
+        "y": 200,
+        "wires": []
+    }
+]
