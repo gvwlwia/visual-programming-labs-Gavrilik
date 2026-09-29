@@ -1,0 +1,74 @@
+[
+    {
+        "id": "74cba2546ab6652a",
+        "type": "tab",
+        "label": "2.5 Template",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "ece116ee1a322525",
+        "type": "inject",
+        "z": "74cba2546ab6652a",
+        "name": "Данные студента",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "lab2/Gavrilik/template",
+        "payload": "{\"surname\":\"Gavrilik\",\"group\":\"ИИ\",\"score\":95}",
+        "payloadType": "json",
+        "x": 230,
+        "y": 220,
+        "wires": [
+            [
+                "1d6b7536c12b2d18"
+            ]
+        ]
+    },
+    {
+        "id": "1d6b7536c12b2d18",
+        "type": "template",
+        "z": "74cba2546ab6652a",
+        "name": "Шаблон карточки",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{\n  \"student\": \"{{payload.surname}}\",\n  \"group\": \"{{payload.group}}\",\n  \"score\": {{payload.score}},\n  \"status\": \"Лабораторная работа 2, Node-RED\",\n  \"topic\": \"{{{topic}}}\"\n}",
+        "output": "json",
+        "x": 450,
+        "y": 220,
+        "wires": [
+            [
+                "f29485a0e52fad7b"
+            ]
+        ]
+    },
+    {
+        "id": "f29485a0e52fad7b",
+        "type": "debug",
+        "z": "74cba2546ab6652a",
+        "name": "debug 4",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 620,
+        "y": 220,
+        "wires": []
+    }
+]
