@@ -1,0 +1,174 @@
+[
+    {
+        "id": "f037f6616e170485",
+        "type": "tab",
+        "label": "2.8 Endpoints",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "670a29daf93df62e",
+        "type": "http in",
+        "z": "f037f6616e170485",
+        "name": "GET /api/text",
+        "url": "/api/text",
+        "method": "get",
+        "upload": false,
+        "skipBodyParsing": false,
+        "swaggerDoc": "",
+        "x": 150,
+        "y": 220,
+        "wires": [
+            [
+                "8d9d295ccee782d5"
+            ]
+        ]
+    },
+    {
+        "id": "2e89adb98e322449",
+        "type": "http response",
+        "z": "f037f6616e170485",
+        "name": "Ответ text",
+        "statusCode": "",
+        "headers": {},
+        "x": 470,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "8d9d295ccee782d5",
+        "type": "template",
+        "z": "f037f6616e170485",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "plain",
+        "template": "Привет от Node-RED! Автор: Gavrilik, группа ИИ",
+        "output": "str",
+        "x": 320,
+        "y": 220,
+        "wires": [
+            [
+                "2e89adb98e322449"
+            ]
+        ]
+    },
+    {
+        "id": "cda77041d8033f34",
+        "type": "http in",
+        "z": "f037f6616e170485",
+        "name": "",
+        "url": "/api/info",
+        "method": "get",
+        "upload": false,
+        "skipBodyParsing": false,
+        "swaggerDoc": "",
+        "x": 130,
+        "y": 380,
+        "wires": [
+            [
+                "b99ad274b09ef985"
+            ]
+        ]
+    },
+    {
+        "id": "b99ad274b09ef985",
+        "type": "function",
+        "z": "f037f6616e170485",
+        "name": "Инфо",
+        "func": "msg.payload = {\n    student: \"Gavrilik\",\n    group: \"ИИ\"\n};\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 290,
+        "y": 380,
+        "wires": [
+            [
+                "20aff61f08598234"
+            ]
+        ]
+    },
+    {
+        "id": "20aff61f08598234",
+        "type": "http response",
+        "z": "f037f6616e170485",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 490,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "50eb0fbc2446b53b",
+        "type": "http in",
+        "z": "f037f6616e170485",
+        "name": "GET /api/items/:id",
+        "url": "/api/items/:id",
+        "method": "get",
+        "upload": false,
+        "skipBodyParsing": false,
+        "swaggerDoc": "",
+        "x": 170,
+        "y": 460,
+        "wires": [
+            [
+                "bafe483b5d61ce1c"
+            ]
+        ]
+    },
+    {
+        "id": "f47cea73d83f3a12",
+        "type": "http response",
+        "z": "f037f6616e170485",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 530,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "bafe483b5d61ce1c",
+        "type": "function",
+        "z": "f037f6616e170485",
+        "name": "Предметы",
+        "func": "const items = [\n    { id: 1, name: \"Ноутбук\" },\n    { id: 2, name: \"Мышь\" },\n    { id: 3, name: \"Клавиатура\" }\n];\n\nconst id = msg.req.params.id;\nconst limit = msg.req.query.limit;\n\n// Вариант 1: запрос конкретного предмета /api/items/:id\nif (id !== undefined) {\n    const num = Number(id);\n    if (!Number.isInteger(num) || num <= 0) {\n        msg.statusCode = 400;\n        msg.payload = { error: \"id must be a positive integer\" };\n        return msg;\n    }\n    const found = items.find(function (item) { return item.id === num; });\n    if (!found) {\n        msg.statusCode = 404;\n        msg.payload = { error: \"item not found\", id: num };\n        return msg;\n    }\n    msg.statusCode = 200;\n    msg.payload = found;\n    return msg;\n}\n\n// Вариант 2: список /api/items?limit=N\nif (limit !== undefined) {\n    const n = Number(limit);\n    if (!Number.isInteger(n) || n <= 0) {\n        msg.statusCode = 400;\n        msg.payload = { error: \"limit must be a positive integer\" };\n        return msg;\n    }\n    msg.statusCode = 200;\n    msg.payload = items.slice(0, n);\n    return msg;\n}\n\n// Без параметров: весь список\nmsg.statusCode = 200;\nmsg.payload = items;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 370,
+        "y": 460,
+        "wires": [
+            [
+                "f47cea73d83f3a12"
+            ]
+        ]
+    },
+    {
+        "id": "171c5b279ec42c8c",
+        "type": "http in",
+        "z": "f037f6616e170485",
+        "name": "",
+        "url": "/api/items",
+        "method": "get",
+        "upload": false,
+        "skipBodyParsing": false,
+        "swaggerDoc": "",
+        "x": 200,
+        "y": 520,
+        "wires": [
+            [
+                "bafe483b5d61ce1c"
+            ]
+        ]
+    }
+]
