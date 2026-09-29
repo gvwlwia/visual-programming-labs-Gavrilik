@@ -1,0 +1,129 @@
+[
+    {
+        "id": "66d4f8bc94f3874a",
+        "type": "tab",
+        "label": "2.3 Switch",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "9641d79a833a1657",
+        "type": "inject",
+        "z": "66d4f8bc94f3874a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "Температура",
+        "payload": "25",
+        "payloadType": "num",
+        "x": 140,
+        "y": 220,
+        "wires": [
+            [
+                "da7cd5f958d7ed55"
+            ]
+        ]
+    },
+    {
+        "id": "da7cd5f958d7ed55",
+        "type": "switch",
+        "z": "66d4f8bc94f3874a",
+        "name": "Проверка температуры",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "gt",
+                "v": "30",
+                "vt": "num"
+            },
+            {
+                "t": "lt",
+                "v": "10",
+                "vt": "num"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 3,
+        "x": 390,
+        "y": 220,
+        "wires": [
+            [
+                "9bb9f6c2f664b8b3"
+            ],
+            [
+                "1538ee5b9722c5f8"
+            ],
+            [
+                "3b99be63b184be9b"
+            ]
+        ]
+    },
+    {
+        "id": "9bb9f6c2f664b8b3",
+        "type": "debug",
+        "z": "66d4f8bc94f3874a",
+        "name": "Жарко",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 590,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "1538ee5b9722c5f8",
+        "type": "debug",
+        "z": "66d4f8bc94f3874a",
+        "name": "Холодно",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 600,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "3b99be63b184be9b",
+        "type": "debug",
+        "z": "66d4f8bc94f3874a",
+        "name": "Нормально",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 610,
+        "y": 300,
+        "wires": []
+    }
+]
