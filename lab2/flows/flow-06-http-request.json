@@ -1,0 +1,80 @@
+[
+    {
+        "id": "86e41f43f78ee915",
+        "type": "tab",
+        "label": "2.6 HTTP Request",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "b6f2c4cdc5ecb3dd",
+        "type": "inject",
+        "z": "86e41f43f78ee915",
+        "name": "Запросить факт",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "lab2/Gavrilik/http",
+        "payload": "",
+        "payloadType": "date",
+        "x": 140,
+        "y": 200,
+        "wires": [
+            [
+                "f85080360c7d0f68"
+            ]
+        ]
+    },
+    {
+        "id": "4aae888e725465c9",
+        "type": "debug",
+        "z": "86e41f43f78ee915",
+        "name": "debug 5",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 660,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "f85080360c7d0f68",
+        "type": "http request",
+        "z": "86e41f43f78ee915",
+        "name": "Шутка",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://api.chucknorris.io/jokes/random",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 370,
+        "y": 200,
+        "wires": [
+            [
+                "4aae888e725465c9"
+            ]
+        ]
+    }
+]
