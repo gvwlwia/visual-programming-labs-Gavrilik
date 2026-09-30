@@ -1,0 +1,159 @@
+[
+    {
+        "id": "0f193d8842108eee",
+        "type": "tab",
+        "label": "2.9 Dashboard",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "99b9c97c2dd2377c",
+        "type": "inject",
+        "z": "0f193d8842108eee",
+        "name": "Датчик",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "2",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 120,
+        "y": 240,
+        "wires": [
+            [
+                "1757fa93c5bc4c21"
+            ]
+        ]
+    },
+    {
+        "id": "1757fa93c5bc4c21",
+        "type": "function",
+        "z": "0f193d8842108eee",
+        "name": "Температура",
+        "func": "msg.payload = Math.round((20 + Math.random() * 10) * 10) / 10;\nmsg.topic = \"Температура Gavrilik\";\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 400,
+        "y": 240,
+        "wires": [
+            [
+                "9de263aa72daf4cb",
+                "f47a1264ba26979e"
+            ]
+        ]
+    },
+    {
+        "id": "9de263aa72daf4cb",
+        "type": "ui_gauge",
+        "z": "0f193d8842108eee",
+        "name": "Gauge температуры",
+        "group": "01c45c5d060062c9",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Температура",
+        "label": "°C",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "40",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 680,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "f47a1264ba26979e",
+        "type": "ui_chart",
+        "z": "0f193d8842108eee",
+        "name": "График температуры",
+        "group": "01c45c5d060062c9",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "label": "История температуры",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": "5",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "60",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 680,
+        "y": 280,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "01c45c5d060062c9",
+        "type": "ui_group",
+        "name": "Датчики",
+        "tab": "ddf46a5d32b91eb0",
+        "order": 1,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "ddf46a5d32b91eb0",
+        "type": "ui_tab",
+        "name": "Gavrilik Lab2",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "d455c2609876a5e7",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-dashboard": "3.6.6"
+        }
+    }
+]
