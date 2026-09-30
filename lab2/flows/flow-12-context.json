@@ -1,0 +1,208 @@
+[
+    {
+        "id": "5eb9fa4d6861454e",
+        "type": "tab",
+        "label": "2.12 Context",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "d73da8b2fbdc898b",
+        "type": "inject",
+        "z": "5eb9fa4d6861454e",
+        "name": "+1 к счётчику",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 190,
+        "y": 180,
+        "wires": [
+            [
+                "bb58a1627032354b"
+            ]
+        ]
+    },
+    {
+        "id": "26aae6b9f6bd7ad1",
+        "type": "inject",
+        "z": "5eb9fa4d6861454e",
+        "name": "Прочитать счётчик",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 210,
+        "y": 260,
+        "wires": [
+            [
+                "a8e340ce821d8cc0"
+            ]
+        ]
+    },
+    {
+        "id": "e2bdfb867c3a926c",
+        "type": "inject",
+        "z": "5eb9fa4d6861454e",
+        "name": "Сбросить",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 180,
+        "y": 340,
+        "wires": [
+            [
+                "9183e8a41b3ec7df"
+            ]
+        ]
+    },
+    {
+        "id": "48114d87816344bf",
+        "type": "debug",
+        "z": "5eb9fa4d6861454e",
+        "name": "Счётчик",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 640,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "9128a47fd41d5cde",
+        "type": "debug",
+        "z": "5eb9fa4d6861454e",
+        "name": "Текущее значение",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 670,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "e7017dcde88c2549",
+        "type": "debug",
+        "z": "5eb9fa4d6861454e",
+        "name": "Сброс",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 630,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "bb58a1627032354b",
+        "type": "function",
+        "z": "5eb9fa4d6861454e",
+        "name": "Увеличить счётчик",
+        "func": "// читаем значение из flow context, если его нет, начинаем с 0\nlet counter = flow.get(\"counter\") || 0;\n\ncounter = counter + 1;\n\n// сохраняем обратно в flow context\nflow.set(\"counter\", counter);\n\nmsg.payload = {\n    author: \"Gavrilik\",\n    counter: counter\n};\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 450,
+        "y": 180,
+        "wires": [
+            [
+                "48114d87816344bf"
+            ]
+        ]
+    },
+    {
+        "id": "a8e340ce821d8cc0",
+        "type": "function",
+        "z": "5eb9fa4d6861454e",
+        "name": "Прочитать",
+        "func": "msg.payload = {\n    counter: flow.get(\"counter\") || 0\n};\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 430,
+        "y": 260,
+        "wires": [
+            [
+                "9128a47fd41d5cde"
+            ]
+        ]
+    },
+    {
+        "id": "9183e8a41b3ec7df",
+        "type": "function",
+        "z": "5eb9fa4d6861454e",
+        "name": "Сброс",
+        "func": "flow.set(\"counter\", 0);\nmsg.payload = \"Счётчик сброшен\";\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 410,
+        "y": 340,
+        "wires": [
+            [
+                "e7017dcde88c2549"
+            ]
+        ]
+    }
+]
