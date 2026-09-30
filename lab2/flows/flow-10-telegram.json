@@ -1,0 +1,218 @@
+[
+    {
+        "id": "f5d6bc0589e87e7e",
+        "type": "tab",
+        "label": "2.10. Telegram-бот",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "89f82984e468f1e2",
+        "type": "telegram command",
+        "z": "f5d6bc0589e87e7e",
+        "name": "",
+        "command": "/start",
+        "description": "",
+        "registercommand": false,
+        "language": "",
+        "scope": "default",
+        "bot": "f990fa372355fb53",
+        "strict": false,
+        "hasresponse": true,
+        "useregex": false,
+        "removeregexcommand": false,
+        "outputs": 2,
+        "x": 110,
+        "y": 240,
+        "wires": [
+            [
+                "1f7a3a4e53de9c32"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "64d886ae4bcc1adb",
+        "type": "telegram sender",
+        "z": "f5d6bc0589e87e7e",
+        "name": "",
+        "bot": "f990fa372355fb53",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 610,
+        "y": 240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1f7a3a4e53de9c32",
+        "type": "function",
+        "z": "f5d6bc0589e87e7e",
+        "name": "Ответ /start",
+        "func": "msg.payload = {\n    chatId: msg.payload.chatId,\n    type: \"message\",\n    content: \"Привет! Я бот tvl_lab2_gavrilik_bot. Автор: Gavrilik, группа ИИ.\"\n};\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 390,
+        "y": 240,
+        "wires": [
+            [
+                "64d886ae4bcc1adb"
+            ]
+        ]
+    },
+    {
+        "id": "3f9996a769e14062",
+        "type": "telegram command",
+        "z": "f5d6bc0589e87e7e",
+        "name": "",
+        "command": "/time",
+        "description": "",
+        "registercommand": false,
+        "language": "",
+        "scope": "default",
+        "bot": "f990fa372355fb53",
+        "strict": false,
+        "hasresponse": true,
+        "useregex": false,
+        "removeregexcommand": false,
+        "outputs": 2,
+        "x": 110,
+        "y": 320,
+        "wires": [
+            [
+                "d5b07918a1df8375"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "446db9d2fcdd33b1",
+        "type": "telegram sender",
+        "z": "f5d6bc0589e87e7e",
+        "name": "",
+        "bot": "f990fa372355fb53",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 610,
+        "y": 320,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d5b07918a1df8375",
+        "type": "function",
+        "z": "f5d6bc0589e87e7e",
+        "name": "Ответ /time",
+        "func": "const now = new Date().toLocaleString(\"ru-RU\");\nmsg.payload = {\n    chatId: msg.payload.chatId,\n    type: \"message\",\n    content: \"Сейчас на сервере: \" + now\n};\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 370,
+        "y": 320,
+        "wires": [
+            [
+                "446db9d2fcdd33b1"
+            ]
+        ]
+    },
+    {
+        "id": "dc1170493d28dee7",
+        "type": "telegram receiver",
+        "z": "f5d6bc0589e87e7e",
+        "name": "",
+        "bot": "f990fa372355fb53",
+        "saveDataDir": "",
+        "filterCommands": false,
+        "hasinput": false,
+        "inputs": 0,
+        "handleallupdates": false,
+        "handleprocessupdates": false,
+        "x": 150,
+        "y": 400,
+        "wires": [
+            [
+                "07b4d4e224a1d964"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "bddaf7db2819e9a6",
+        "type": "telegram sender",
+        "z": "f5d6bc0589e87e7e",
+        "name": "",
+        "bot": "f990fa372355fb53",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 610,
+        "y": 400,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "07b4d4e224a1d964",
+        "type": "function",
+        "z": "f5d6bc0589e87e7e",
+        "name": "Echo",
+        "func": "const text = msg.payload.content;\n\n// команды (начинаются с /) обрабатываются отдельными нодами\nif (!text || String(text).startsWith(\"/\")) {\n    return null;\n}\n\nmsg.payload = {\n    chatId: msg.payload.chatId,\n    type: \"message\",\n    content: \"Вы написали: \" + text\n};\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 400,
+        "wires": [
+            [
+                "bddaf7db2819e9a6"
+            ]
+        ]
+    },
+    {
+        "id": "f990fa372355fb53",
+        "type": "telegram bot",
+        "botname": "tvl_lab2_gavrilik_bot",
+        "usernames": "",
+        "chatids": "",
+        "baseapiurl": "",
+        "testenvironment": false,
+        "updatemode": "polling",
+        "pollinterval": 300,
+        "usesocks": false,
+        "sockshost": "",
+        "socksprotocol": "socks5",
+        "socksport": 6667,
+        "socksusername": "anonymous",
+        "sockspassword": "",
+        "bothost": "",
+        "botpath": "",
+        "localbothost": "0.0.0.0",
+        "localbotport": 8443,
+        "publicbotport": 8443,
+        "privatekey": "",
+        "certificate": "",
+        "useselfsignedcertificate": false,
+        "sslterminated": false,
+        "verboselogging": false
+    },
+    {
+        "id": "33f5d30a34136fb6",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-contrib-telegrambot": "19.0.3"
+        }
+    }
+]
