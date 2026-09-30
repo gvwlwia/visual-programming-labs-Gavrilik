@@ -1,0 +1,142 @@
+[
+    {
+        "id": "03e7724102ce685d",
+        "type": "tab",
+        "label": "2.11 Files",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "c5da2bb53578e985",
+        "type": "function",
+        "z": "03e7724102ce685d",
+        "name": "Формируем запись",
+        "func": "const record = {\n    student: \"Gavrilik\",\n    group: \"ИИ\",\n    time: new Date().toISOString(),\n    value: Math.floor(Math.random() * 100)\n};\n\n// одна строка JSON на запись, в конце перенос строки\nmsg.payload = JSON.stringify(record) + \"\\n\";\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 300,
+        "wires": [
+            [
+                "16112180530746d1"
+            ]
+        ]
+    },
+    {
+        "id": "bdcca8e103fb6ca6",
+        "type": "inject",
+        "z": "03e7724102ce685d",
+        "name": "Записать",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 140,
+        "y": 300,
+        "wires": [
+            [
+                "c5da2bb53578e985"
+            ]
+        ]
+    },
+    {
+        "id": "16112180530746d1",
+        "type": "file",
+        "z": "03e7724102ce685d",
+        "name": "Запись в файл",
+        "filename": "/data/lab2-gavrilik.txt",
+        "filenameType": "str",
+        "appendNewline": false,
+        "createDir": true,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 580,
+        "y": 300,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "56f87ea294e2ea03",
+        "type": "file in",
+        "z": "03e7724102ce685d",
+        "name": "Чтение файла",
+        "filename": "/data/lab2-gavrilik.txt",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 400,
+        "y": 400,
+        "wires": [
+            [
+                "2328223abb3b6eb4"
+            ]
+        ]
+    },
+    {
+        "id": "12fb39853abe1782",
+        "type": "inject",
+        "z": "03e7724102ce685d",
+        "name": "Прочитать",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 160,
+        "y": 400,
+        "wires": [
+            [
+                "56f87ea294e2ea03"
+            ]
+        ]
+    },
+    {
+        "id": "2328223abb3b6eb4",
+        "type": "debug",
+        "z": "03e7724102ce685d",
+        "name": "Содержимое файла",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 640,
+        "y": 400,
+        "wires": []
+    }
+]
