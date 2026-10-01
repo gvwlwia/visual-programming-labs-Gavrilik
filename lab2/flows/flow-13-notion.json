@@ -1,0 +1,210 @@
+[
+    {
+        "id": "4486e4edb8748d4f",
+        "type": "tab",
+        "label": "Ачивка Notion",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "3e16a250a3e0ec24",
+        "type": "inject",
+        "z": "4486e4edb8748d4f",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 140,
+        "y": 180,
+        "wires": [
+            [
+                "a0635e4d35593494"
+            ]
+        ]
+    },
+    {
+        "id": "a0635e4d35593494",
+        "type": "function",
+        "z": "4486e4edb8748d4f",
+        "name": "Тело запроса",
+        "func": "const DATABASE_ID = \"3ec933213ac58090be0aeae9a451804b\";\n\nmsg.url = \"https://api.notion.com/v1/pages\";\nmsg.headers = {\n    \"Notion-Version\": \"2022-06-28\",\n    \"Content-Type\": \"application/json\"\n};\nmsg.payload = {\n    parent: { database_id: DATABASE_ID },\n    properties: {\n        Name: { title: [{ text: { content: \"Gavrilik lab2 \" + new Date().toISOString() } }] },\n        Value: { number: Math.floor(Math.random() * 100) },\n        Author: { rich_text: [{ text: { content: \"Gavrilik, группа ИИ\" } }] }\n    }\n};\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 180,
+        "wires": [
+            [
+                "c3ab4afa0afdd1af"
+            ]
+        ]
+    },
+    {
+        "id": "c3ab4afa0afdd1af",
+        "type": "http request",
+        "z": "4486e4edb8748d4f",
+        "name": "",
+        "method": "POST",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "bearer",
+        "senderr": false,
+        "headers": [],
+        "x": 550,
+        "y": 180,
+        "wires": [
+            [
+                "d994126cce491bf7"
+            ]
+        ]
+    },
+    {
+        "id": "d994126cce491bf7",
+        "type": "debug",
+        "z": "4486e4edb8748d4f",
+        "name": "debug 7",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 740,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "2ddbdbae7e1dc8dc",
+        "type": "inject",
+        "z": "4486e4edb8748d4f",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 300,
+        "wires": [
+            [
+                "8ed5bdc80c47fa97"
+            ]
+        ]
+    },
+    {
+        "id": "8ed5bdc80c47fa97",
+        "type": "function",
+        "z": "4486e4edb8748d4f",
+        "name": "Запрос выборки",
+        "func": "const DATABASE_ID = \"3ec933213ac58090be0aeae9a451804b\";\n\nmsg.url = \"https://api.notion.com/v1/databases/\" + DATABASE_ID + \"/query\";\nmsg.headers = {\n    \"Notion-Version\": \"2022-06-28\",\n    \"Content-Type\": \"application/json\"\n};\nmsg.payload = {\n    page_size: 10,\n    sorts: [{ timestamp: \"created_time\", direction: \"descending\" }]\n};\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 310,
+        "y": 300,
+        "wires": [
+            [
+                "5a3176359ca0ce39"
+            ]
+        ]
+    },
+    {
+        "id": "5a3176359ca0ce39",
+        "type": "http request",
+        "z": "4486e4edb8748d4f",
+        "name": "",
+        "method": "POST",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "bearer",
+        "senderr": false,
+        "headers": [],
+        "x": 510,
+        "y": 300,
+        "wires": [
+            [
+                "ef434fb976f508e4"
+            ]
+        ]
+    },
+    {
+        "id": "ef434fb976f508e4",
+        "type": "function",
+        "z": "4486e4edb8748d4f",
+        "name": "Разобрать ответ",
+        "func": "if (msg.statusCode !== 200) {\n    msg.payload = { error: msg.payload };\n    return msg;\n}\n\nconst rows = [];\nfor (const page of msg.payload.results) {\n    const p = page.properties;\n    rows.push({\n        name: p.Name.title.length ? p.Name.title[0].plain_text : \"\",\n        value: p.Value.number,\n        author: p.Author.rich_text.length ? p.Author.rich_text[0].plain_text : \"\"\n    });\n}\nmsg.payload = rows;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 710,
+        "y": 300,
+        "wires": [
+            [
+                "fcc82d4921f6e33b"
+            ]
+        ]
+    },
+    {
+        "id": "fcc82d4921f6e33b",
+        "type": "debug",
+        "z": "4486e4edb8748d4f",
+        "name": "debug 8",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 880,
+        "y": 300,
+        "wires": []
+    }
+]
