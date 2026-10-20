@@ -1,0 +1,99 @@
+{
+  "name": "lab4-Gavrilik-03-if",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "ec2384a8-486d-4392-8063-56a8132b12f7",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "jsCode": "const surname = 'Gavrilik';\nconst numbers = [3, 8, 15, 4, 23];\n\nlet sum = 0;\nfor (let i = 0; i < numbers.length; i++) {\n  sum += numbers[i];\n}\n\nlet verdict;\nif (sum > 50) {\n  verdict = 'big';\n} else {\n  verdict = 'small';\n}\n\nconsole.log(surname, 'sum =', sum, 'verdict =', verdict);\n\nreturn [\n  {\n    json: {\n      payload: sum,\n      verdict: verdict,\n      surname: surname,\n    },\n  },\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        224,
+        0
+      ],
+      "id": "ba7367cf-6541-4904-a228-00446886b3bb",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "22ba8f99-09ea-4dfc-9080-fe60bbacf88b",
+              "leftValue": "={{ $json.payload }}",
+              "rightValue": 50,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        448,
+        0
+      ],
+      "id": "4479d081-77ef-448a-8b60-0b4c24013c0c",
+      "name": "If"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "693f27b3-070f-4052-999f-06d0ee82362f",
+  "meta": {
+    "instanceId": "19722f7024441a65308f53ea8286b40bd8774155c88e12faae1a8eb7c055402a"
+  },
+  "nodeGroups": [],
+  "id": "Tr1bzVCURwDckXT2",
+  "tags": []
+}
