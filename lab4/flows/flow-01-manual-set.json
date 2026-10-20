@@ -1,0 +1,95 @@
+{
+  "name": "lab4-Gavrilik-01-manual-set",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "8a6af02f-0e97-4aca-92fb-298412e54da9",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "24d21077-aec7-4d7f-ad53-47063792f25e",
+              "name": "payload",
+              "value": "Gavrilik group-AI 241 lab4 hello",
+              "type": "string"
+            },
+            {
+              "id": "4606eb43-9b8e-493e-ad7d-eda409127e16",
+              "name": "topic",
+              "value": "lab4/Gavrilik/basic",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        224,
+        0
+      ],
+      "id": "b5767392-47c8-4372-9403-26b6e0ff2707",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Получаем все элементы, пришедшие из ноды Set\nconst items = $input.all();\n\n// Выводим в консоль браузера (F12 → Console)\nconsole.log('Получены данные:', JSON.stringify(items.map(i => i.json)));\n\n// Возвращаем данные дальше (они появятся в Output)\nreturn items;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        448,
+        0
+      ],
+      "id": "5505f69b-78a6-494e-898e-db4841486676",
+      "name": "Code in JavaScript"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "95d975c0-b460-4ed5-b2bb-d0f2f1a81526",
+  "meta": {
+    "instanceId": "19722f7024441a65308f53ea8286b40bd8774155c88e12faae1a8eb7c055402a"
+  },
+  "nodeGroups": [],
+  "id": "HqOuInMiu6aLMrQ1",
+  "tags": []
+}
