@@ -1,0 +1,99 @@
+{
+  "name": "lab4-Gavrilik-09-redis",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "0147e405-e986-447c-8a1a-3e17c6123c36",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "propertyName": "value",
+        "key": "gavrilik",
+        "keyType": "string",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        448,
+        0
+      ],
+      "id": "2317db00-9d39-49d8-b50f-551f009ad939",
+      "name": "Redis Get",
+      "credentials": {
+        "redis": {
+          "id": "TdJUQ6ZK31ixmRF0",
+          "name": "Redis Gavrilik"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "set",
+        "key": "gavrilik",
+        "value": "hello from Gavrilik",
+        "keyType": "string"
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        224,
+        0
+      ],
+      "id": "90baf8cd-2772-4626-9775-664244d70ba1",
+      "name": "Redis Set",
+      "credentials": {
+        "redis": {
+          "id": "TdJUQ6ZK31ixmRF0",
+          "name": "Redis Gavrilik"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Redis Set",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Redis Set": {
+      "main": [
+        [
+          {
+            "node": "Redis Get",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "f411b705-fb8a-48e2-94fe-38b3d0d95989",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "19722f7024441a65308f53ea8286b40bd8774155c88e12faae1a8eb7c055402a"
+  },
+  "nodeGroups": [],
+  "id": "4crIyNWZaDEpt5U0",
+  "tags": []
+}
