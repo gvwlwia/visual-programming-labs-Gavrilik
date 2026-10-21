@@ -1,0 +1,101 @@
+{
+  "name": "lab4-Gavrilik-04-set",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "adb69d7d-4599-4434-9b41-06562abeee23",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "14ee7561-8c92-4b5c-baa6-6fd1dfe16e7e",
+              "name": "topic",
+              "value": "lab4/Gavrilik/set",
+              "type": "string"
+            },
+            {
+              "id": "a1224f24-0d93-4686-99da-ca048643db68",
+              "name": "timestamp",
+              "value": "={{ $now.toISO() }}",
+              "type": "string"
+            },
+            {
+              "id": "3bcd9996-0242-42e5-acbd-ae105b84925d",
+              "name": "payload",
+              "value": "Gavrilik lab4 set",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        224,
+        0
+      ],
+      "id": "c47524a3-ab38-4316-80fa-0c3e9eaf09d0",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Берём сообщение (msg), пришедшее из ноды Set\nconst msg = $input.first().json;\n\n// Выводим полный объект в консоль браузера (F12 → Console)\nconsole.log('Complete msg object:', JSON.stringify(msg, null, 2));\n\n// Возвращаем объект целиком, чтобы он был виден в Output\nreturn [\n  {\n    json: {\n      msg: msg,\n    },\n  },\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        448,
+        0
+      ],
+      "id": "1ca13d4a-8057-4a28-ba2f-39f32db01206",
+      "name": "Code in JavaScript"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "722a5282-6f9e-4fcb-9c6a-89dd8cf2d1cf",
+  "meta": {
+    "instanceId": "19722f7024441a65308f53ea8286b40bd8774155c88e12faae1a8eb7c055402a"
+  },
+  "nodeGroups": [],
+  "id": "U1K2PlQmJVVHdxml",
+  "tags": []
+}
