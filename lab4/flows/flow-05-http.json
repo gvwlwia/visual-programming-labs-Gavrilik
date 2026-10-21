@@ -1,0 +1,86 @@
+{
+  "name": "lab4-Gavrilik-05-http",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "39ab1bae-c848-4f00-af61-c53ec61df09c",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "url": "https://api.chucknorris.io/jokes/random",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        224,
+        0
+      ],
+      "id": "6cd28adb-8d3e-4bd1-b842-064d682e3afd",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Ответ публичного API (из ноды HTTP Request)\nconst data = $input.first().json;\n\nconsole.log('Ответ API:', JSON.stringify(data));\n\nreturn [\n  {\n    json: {\n      payload: 'Gavrilik: ' + data.value,\n      topic: 'lab4/Gavrilik/http',\n      jokeId: data.id,\n    },\n  },\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        448,
+        0
+      ],
+      "id": "ff6a938e-2448-4440-8cb9-4152cbea1a64",
+      "name": "Code in JavaScript"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "184d1976-5005-470c-9a17-ae2a49766918",
+  "meta": {
+    "instanceId": "19722f7024441a65308f53ea8286b40bd8774155c88e12faae1a8eb7c055402a"
+  },
+  "nodeGroups": [],
+  "id": "zvfNsmCGa3ELL4bX",
+  "tags": []
+}
