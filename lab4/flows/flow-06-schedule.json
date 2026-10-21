@@ -1,0 +1,64 @@
+{
+  "name": "lab4-Gavrilik-06-schedule",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 1
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        0,
+        0
+      ],
+      "id": "d83a3e76-6eac-410a-aa52-c807151df41a",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Текущее время на момент срабатывания расписания\nconst now = new Date();\n\nconsole.log('Сработало расписание:', now.toISOString());\n\nreturn [\n  {\n    json: {\n      payload: 'Gavrilik schedule tick',\n      topic: 'lab4/Gavrilik/schedule',\n      time: now.toISOString(),\n      localTime: now.toLocaleString('ru-RU', { timeZone: 'Europe/Minsk' }),\n    },\n  },\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        224,
+        0
+      ],
+      "id": "b22fe6dc-f123-40ac-b917-5122411f27f6",
+      "name": "Code in JavaScript"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "661995d0-f8bd-4157-a750-1334b77a387b",
+  "meta": {
+    "instanceId": "19722f7024441a65308f53ea8286b40bd8774155c88e12faae1a8eb7c055402a"
+  },
+  "nodeGroups": [],
+  "id": "z5enkczRQnG0ycNV",
+  "tags": []
+}
