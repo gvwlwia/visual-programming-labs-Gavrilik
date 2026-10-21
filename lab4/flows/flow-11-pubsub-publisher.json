@@ -1,0 +1,64 @@
+{
+  "name": "lab4-Gavrilik-11-pubsub-publisher",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "52207be7-19d8-465f-aeb1-8b8d84d3f903",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "operation": "publish",
+        "channel": "lab4-gavrilik",
+        "messageData": "={{ JSON.stringify({ from: 'Gavrilik', text: 'hello via redis pub/sub', time: $now.toISO() }) }}"
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        224,
+        0
+      ],
+      "id": "023d6316-e32d-451e-b140-01dc34a64b84",
+      "name": "Redis",
+      "credentials": {
+        "redis": {
+          "id": "TdJUQ6ZK31ixmRF0",
+          "name": "Redis Gavrilik"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Redis",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "5941848e-70f2-4c36-b74f-7679ba55ef0e",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "19722f7024441a65308f53ea8286b40bd8774155c88e12faae1a8eb7c055402a"
+  },
+  "nodeGroups": [],
+  "id": "wmqGUDbJCXM9ND2L",
+  "tags": []
+}

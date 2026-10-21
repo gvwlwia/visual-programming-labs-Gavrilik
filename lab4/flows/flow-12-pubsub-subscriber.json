@@ -1,0 +1,68 @@
+{
+  "name": "lab4-Gavrilik-12-pubsub-subscriber",
+  "nodes": [
+    {
+      "parameters": {
+        "channels": "lab4-gavrilik",
+        "options": {
+          "jsonParseBody": true,
+          "onlyMessage": true
+        }
+      },
+      "type": "n8n-nodes-base.redisTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "70717ea9-b668-4808-ae8f-df4a0303ff5d",
+      "name": "Redis Trigger",
+      "credentials": {
+        "redis": {
+          "id": "TdJUQ6ZK31ixmRF0",
+          "name": "Redis Gavrilik"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Сообщение из канала Redis\nconst raw = $input.first().json;\nconst msg = raw.message ?? raw;\n\nconsole.log('Получено из канала lab4-gavrilik:', JSON.stringify(msg));\n\nreturn [\n  {\n    json: {\n      payload: 'Subscriber Gavrilik received message',\n      topic: 'lab4/Gavrilik/pubsub',\n      received: msg,\n    },\n  },\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        224,
+        0
+      ],
+      "id": "f9b3b04e-07a4-453a-a593-915a4be8647e",
+      "name": "Code in JavaScript"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Redis Trigger": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "dd711efc-fb40-4248-b81c-f94a01aa56d4",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "19722f7024441a65308f53ea8286b40bd8774155c88e12faae1a8eb7c055402a"
+  },
+  "nodeGroups": [],
+  "id": "vQ22xVgiCSuaOjeU",
+  "tags": []
+}
